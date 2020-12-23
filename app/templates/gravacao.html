@@ -1,0 +1,43 @@
+{% extends 'base.html '%}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <div class="jumbotron" id="texto-inicial">
+      <h1 class="display-4">Transcrição de Áudio</h1>
+      <hr class="my-4">
+    </div>
+
+
+    <body>
+      <p id="p_caption" align="center" >Iniciar Gravação</p>
+        <div id="controls" align="center">
+        <div id="microphone">
+          <button onclick="toggleRecording()" class="mic_btn"><img src="{{ url_for('static', filename = 'images/microfone.png') }}" width=128 height=128 id="mic"></button>
+          </br>
+          <p id="show_rec_status" style="visibility:hidden">Gravando...</p>
+        </div>
+        </br>
+        <audio controls id="playback" src="" type="audio/wav"></audio>
+        </br>
+        </br>
+        <a id="save" href="#">Nenhum Áudio Gravado</a>
+      </div>
+      </br>
+      </br>
+      <hr class="console">
+      <div class="caption">
+        <h3 style="color:#FFFFFF; margin:0">Caption Console</h3>
+      </div>
+    </body>
+
+    
+    <a type="button" class="btn btn-link" href="static/audio.wav" target="_blank">Reproduzir Áudio </a>
+    <a class="btn btn-primary btn-lg" href="/transcreve" target="_blank" role="button">Transcrever</a>
+    </div>
+  </br>
+
+
+{% endblock %}

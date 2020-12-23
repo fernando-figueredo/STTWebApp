@@ -1,0 +1,48 @@
+{% extends 'base.html '%}
+
+{% block title %}{{ super() }} - Login {% endblock %}
+
+{% block navbar %}
+      {% if current_user.is_authenticated %}
+      <li class="nav-item">
+        <a href="/logout" class="nav-link " >Logout</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a href="/login" class="nav-link " >Login</a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="/solicitacao">Solicitar Missão</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/efetivos">Verificar Status do Efetivo</a>
+      </li>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="POST" id="tela-login">
+        {{ form.csrf_token }}
+        <div class="col-md-2 offset-md-3">
+
+        <div class="form-group">
+          <label>Usuário</label>
+          {{ form.username(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+          <label>Senha</label>
+          {{ form.password(class="form-control") }}
+        </div>
+
+        <div class="checkbox">
+          <label>
+            {{ form.rememberMe }} Lembrar
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-warning">Entrar</button>
+
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html '%}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <div class="jumbotron" id="texto-inicial">
+      <h1 class="display-4">Transcrição de Áudio</h1>
+      <hr class="my-4">
+
+      <a class="btn btn-info btn-lg" href="/upload" role="button">Enviar áudio</a>
+      <a class="btn btn-info btn-lg" href="/gravacao" role="button">Gravar áudio</a>
+    </div>
+
+    
+    <a type="button" class="btn btn-link" href="static/audio.wav" target="_blank">Reproduzir Áudio </a>
+    <a class="btn btn-primary btn-lg" href="/transcreve" target="_blank" role="button">Transcrever</a>
+    </div>
+  </br>
+
+  {% if transcricao != "" %}
+  <div class="container">
+    <div class="jumbotron" id="texto-transcrito">
+  <div>
+    <h1 class="display-6" align="center">Transcrição: </h1>
+    <p>{{transcricao}}</p>
+  </div>
+  </div>
+  </div>
+  {% endif %}
+
+{% endblock %}

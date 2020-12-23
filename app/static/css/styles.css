@@ -1,0 +1,74 @@
+#logo-pf{
+  height: 60px;
+  padding-right: 30px;
+}
+
+#navbarNav{
+  padding-left: 50px;
+  text-align: center;
+}
+
+#texto-inicial{
+  background-color: #ffffff;
+}
+
+#texto-solicitacao{
+background-color: #ffffff;
+padding-bottom: 5px;
+}
+
+#tela-login{
+  padding-top: 50px;
+}
+
+#entrada-dados{
+  padding-bottom:20px;
+}
+
+
+body {
+  padding-bottom: 10px;
+}
+
+nav{
+  background: #1b12a0;
+}
+
+footer{
+width: 100%;
+line-height: 60px;
+background: #1b12a0;
+color: #fff;
+padding: 20px 0 0;
+}
+
+
+footer img {
+  float: right;
+  width: 120px;
+  margin-right: 7%;
+  margin-top: 2%;
+}
+footer span {
+  float: left;
+  margin-left: 7%;
+  margin-top: 2%;
+  font-weight: bold;
+}
+
+html, body {
+             height: 100%;
+             margin: 0pt;
+        }
+        .Frame {
+             display: table;
+             height: 100%;
+             width: 100%;
+        }
+        .Row {
+             display: table-row;
+             height: 1px;
+        }
+        .Row.Expand {
+             height: 50px;
+        }

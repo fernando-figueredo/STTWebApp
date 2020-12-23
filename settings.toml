@@ -1,0 +1,8 @@
+[default]
+TITLE = "Controle de Efetivo UIGE/SR/PF/SP"
+SQLALCHEMY_DATABASE_URI ='sqlite:///storage_test.db'
+SECRET_KEY = "GT3DU1G3SRPFSP"
+SQLALCHEMY_TRACK_MODIFICATIONS = true
+
+[production]
+SQLALCHEMY_DATABASE_URI ='postgres:///storage.db'
