@@ -19,6 +19,11 @@ Open in a Web browser
 Website: http://localhost:5000
 
 
+## Screenshot
+
+![image](https://user-images.githubusercontent.com/45243859/103008940-a8e25600-4514-11eb-98ae-aa0706626fb0.png)
+
+
 ## Structure
 ```bash
 ─Transcrição de áudio
