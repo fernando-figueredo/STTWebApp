@@ -12,32 +12,108 @@
 
 
     <body>
-      <p id="p_caption" align="center" >Iniciar Gravação</p>
-        <div id="controls" align="center">
-        <div id="microphone">
-          <button onclick="toggleRecording()" class="mic_btn"><img src="{{ url_for('static', filename = 'images/microfone.png') }}" width=128 height=128 id="mic"></button>
-          </br>
-          <p id="show_rec_status" style="visibility:hidden">Gravando...</p>
-        </div>
-        </br>
-        <audio controls id="playback" src="" type="audio/wav"></audio>
-        </br>
-        </br>
-        <a id="save" href="#">Nenhum Áudio Gravado</a>
-      </div>
-      </br>
-      </br>
-      <hr class="console">
-      <div class="caption">
-        <h3 style="color:#FFFFFF; margin:0">Caption Console</h3>
-      </div>
-    </body>
+      <main>
+          <p>Grave o áudio para a transcrição</p>
 
-    
-    <a type="button" class="btn btn-link" href="static/audio.wav" target="_blank">Reproduzir Áudio </a>
-    <a class="btn btn-primary btn-lg" href="/transcreve" target="_blank" role="button">Transcrever</a>
-    </div>
-  </br>
+         <p> <button class="btn btn-info" id="btnStart">Iniciar</button>
+          <button class="btn btn-info" id="btnStop">Parar </button>
+          <button class="btn btn-info" href="/save-record" target="_blank" id="btnSave">Salvar </button> </br> </br>
+        </p>
 
+          <audio id= "aud1" controls style="display: none"></audio>
+          
+          <audio id="vid2" controls></audio>
+          
+          <!-- could save to canvas and do image manipulation and saving too -->
+      </main>    
+      <script>
+          let constraintObj = { 
+              audio: true, 
+              video: false
+          }; 
+          
+          //handle older browsers that might implement getUserMedia in some way
+          if (navigator.mediaDevices === undefined) {
+              navigator.mediaDevices = {};
+              navigator.mediaDevices.getUserMedia = function(constraintObj) {
+                  let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                  if (!getUserMedia) {
+                      return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                  }
+                  return new Promise(function(resolve, reject) {
+                      getUserMedia.call(navigator, constraintObj, resolve, reject);
+                  });
+              }
+          }else{
+              navigator.mediaDevices.enumerateDevices()
+              .then(devices => {
+                  devices.forEach(device=>{
+                      console.log(device.kind.toUpperCase(), device.label);
+                      //, device.deviceId
+                  })
+              })
+              .catch(err=>{
+                  console.log(err.name, err.message);
+              })
+          }
+  
+          navigator.mediaDevices.getUserMedia(constraintObj)
+          .then(function(mediaStreamObj) {
+              //connect the media stream to the first audio element
+              let audio = document.querySelector('audio');
+              if ("srcObject" in audio) {
+                  audio.srcObject = mediaStreamObj;
+              } else {
+                  //old version
+                  audio.src = window.URL.createObjectURL(mediaStreamObj);
+              }
+              
+              
+              //add listeners for saving audio/audio
+              let start = document.getElementById('btnStart');
+              let stop = document.getElementById('btnStop');
+              let save = document.getElementById('btnSave');
+              let audSave = document.getElementById('vid2');
+              let mediaRecorder = new MediaRecorder(mediaStreamObj);
+              let chunks = [];
+              
+              start.addEventListener('click', (ev)=>{
+                  document.getElementById("btnStart").style.background='#FF0000';
+                  mediaRecorder.start();
+                  console.log(mediaRecorder.state);
+              })
+              stop.addEventListener('click', (ev)=>{
+                  document.getElementById("btnStart").style.background='#17a2b8';
+                  mediaRecorder.stop();
+                  console.log(mediaRecorder.state);
+              });
+
+              mediaRecorder.ondataavailable = function(ev) {
+                  chunks.push(ev.data);
+              }
+              mediaRecorder.onstop = (ev)=>{
+                  let blob = new Blob(chunks, { 'type' : 'audio/wav;' });
+                  chunks = [];
+                  let audioURL = window.URL.createObjectURL(blob);
+                  audSave.src = audioURL;
+              }
+          })
+          .catch(function(err) { 
+              console.log(err.name, err.message); 
+          });
+          
+          /*********************************
+          getUserMedia returns a Promise
+          resolve - returns a MediaStream Object
+          reject returns one of the following errors
+          AbortError - generic unknown cause
+          NotAllowedError (SecurityError) - user rejected permissions
+          NotFoundError - missing media track
+          NotReadableError - user permissions given but hardware/OS error
+          OverconstrainedError - constraint audio settings preventing
+          TypeError - audio: false, video: false
+          *********************************/
+      </script>
+  </body>
 
 {% endblock %}

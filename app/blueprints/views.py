@@ -66,7 +66,7 @@ def init_app(app):
         if request.method == 'POST':
             f = request.files['file']
             f.save('app/static/audio.wav')
-            return redirect("/", transcricao=transcricao)
+            return redirect("/")
 
     @app.route('/transcreve', methods=['GET', 'POST'])
     def transcreve():
@@ -75,6 +75,11 @@ def init_app(app):
     
     @app.route('/gravacao', methods=['GET', 'POST'])
     def gravacao():
+        return render_template("gravacao.html")
+    
+    @app.route('/save-record', methods=['POST'])
+    def save_record():
+        app.logger.debug(request.files['file'].filename) 
         return render_template("gravacao.html")
     
     @app.route('/uploads', methods=['POST'])
